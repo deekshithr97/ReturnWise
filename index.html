@@ -1,0 +1,1076 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="ReturnWise - Smart Investment Returns Calculator. Calculate SIP, Lumpsum, FD, RD, and PPF returns with interactive charts.">
+    <meta name="keywords" content="SIP calculator, investment calculator, FD calculator, PPF calculator, returns calculator">
+    <meta name="author" content="ReturnWise">
+    <meta name="theme-color" content="#3b82f6">
+    <title>ReturnWise - Smart Investment Returns Calculator</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div id="app">
+        <!-- Navigation -->
+        <nav class="navbar" id="navbar">
+            <div class="nav-container">
+                <a href="#home" class="nav-logo">
+                    <svg class="nav-logo-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="4" y="4" width="16" height="16" rx="2"/>
+                        <path d="M8 12h8M12 8v8"/>
+                    </svg>
+                    <span>ReturnWise</span>
+                </a>
+                <div class="nav-links" id="navLinks">
+                    <a href="#calculators" class="nav-link">Calculators</a>
+                    <a href="#compare" class="nav-link">Compare</a>
+                    <button class="theme-toggle" id="themeToggle" aria-label="Toggle theme">
+                        <svg class="sun-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <circle cx="12" cy="12" r="5"/>
+                            <path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>
+                        </svg>
+                        <svg class="moon-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>
+                        </svg>
+                    </button>
+                    <a href="#calculators" class="btn btn-primary">Try Calculator</a>
+                </div>
+                <button class="mobile-menu-btn" id="mobileMenuBtn" aria-label="Toggle menu">
+                    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M3 12h18M3 6h18M3 18h18"/>
+                    </svg>
+                </button>
+            </div>
+        </nav>
+
+        <!-- Mobile Menu -->
+        <div class="mobile-menu" id="mobileMenu">
+            <div class="mobile-menu-backdrop" id="mobileMenuBackdrop"></div>
+            <div class="mobile-menu-content">
+                <a href="#home" class="mobile-nav-link">Home</a>
+                <a href="#calculators" class="mobile-nav-link">SIP Calculator</a>
+                <a href="#lumpsum" class="mobile-nav-link">Lumpsum</a>
+                <a href="#fd" class="mobile-nav-link">FD Calculator</a>
+                <a href="#rd" class="mobile-nav-link">RD Calculator</a>
+                <a href="#ppf" class="mobile-nav-link">PPF Calculator</a>
+                <a href="#compare" class="mobile-nav-link">Compare</a>
+            </div>
+        </div>
+
+        <!-- Main Content -->
+        <main class="main-content">
+            <!-- Hero Section -->
+            <section class="hero" id="home">
+                <div class="hero-bg"></div>
+                <div class="container">
+                    <div class="hero-content">
+                        <span class="hero-badge">Start Investing Smarter</span>
+                        <h1 class="hero-title">
+                            Know your future returns <br class="hidden-mobile"/>
+                            <span class="gradient-text">before you invest.</span>
+                        </h1>
+                        <p class="hero-description">
+                            Calculate, compare, and visualize your investment returns across multiple asset classes — from SIPs and Mutual Funds to FDs and Gold.
+                        </p>
+                        <div class="hero-buttons">
+                            <a href="#calculators" class="btn btn-primary btn-lg">Calculate Returns</a>
+                            <a href="#compare" class="btn btn-outline btn-lg">
+                                Compare Investments
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+                <div class="hero-glow hero-glow-left"></div>
+                <div class="hero-glow hero-glow-right"></div>
+            </section>
+
+            <!-- Calculator Preview Section -->
+            <section class="calculator-preview" id="calculator-preview">
+                <div class="container">
+                    <div class="preview-card">
+                        <div class="preview-grid">
+                            <div class="preview-controls">
+                                <h3 class="preview-title">Quick Estimator</h3>
+                                
+                                <div class="slider-group">
+                                    <div class="slider-header">
+                                        <label class="slider-label">Monthly Investment</label>
+                                        <span class="slider-value" id="previewAmountValue">₹5,000</span>
+                                    </div>
+                                    <input type="range" class="slider" id="previewAmount" min="500" max="100000" step="500" value="5000">
+                                </div>
+
+                                <div class="slider-group">
+                                    <div class="slider-header">
+                                        <label class="slider-label">Expected Return (p.a)</label>
+                                        <span class="slider-value" id="previewRateValue">12%</span>
+                                    </div>
+                                    <input type="range" class="slider" id="previewRate" min="4" max="30" step="0.5" value="12">
+                                </div>
+
+                                <div class="slider-group">
+                                    <div class="slider-header">
+                                        <label class="slider-label">Time Period</label>
+                                        <span class="slider-value" id="previewYearsValue">10 Years</span>
+                                    </div>
+                                    <input type="range" class="slider" id="previewYears" min="1" max="40" step="1" value="10">
+                                </div>
+
+                                <div class="preview-results">
+                                    <div class="result-item">
+                                        <p class="result-label">Invested</p>
+                                        <p class="result-value" id="previewInvested">₹6.00L</p>
+                                    </div>
+                                    <div class="result-item">
+                                        <p class="result-label">Total Value</p>
+                                        <p class="result-value result-value-highlight" id="previewTotal">₹11.61L</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="preview-chart">
+                                <canvas id="previewChart"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Features Section -->
+            <section class="features" id="features">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Everything an investor needs</h2>
+                        <p class="section-description">
+                            Powerful tools wrapped in a simple design to help you make confident financial decisions.
+                        </p>
+                    </div>
+                    <div class="features-grid">
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <rect x="4" y="4" width="16" height="16" rx="2"/>
+                                    <path d="M8 12h8M12 8v8"/>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title">Accurate CAGR & SIP Calculations</h3>
+                            <p class="feature-description">Precise formulas adjusted for monthly compounding and annualized returns.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M17 1l4 4-4 4"/>
+                                    <path d="M3 11V9a4 4 0 0 1 4-4h14"/>
+                                    <path d="M7 23l-4-4 4-4"/>
+                                    <path d="M21 13v2a4 4 0 0 1-4 4H3"/>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title">Compare Multiple Investments</h3>
+                            <p class="feature-description">Side-by-side comparison of FDs, Mutual Funds, and Gold to make better choices.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M3 3v18h18"/>
+                                    <path d="M18.7 8l-5.1 5.2-2.8-2.7L7 14.3"/>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title">Visual Graphs & Charts</h3>
+                            <p class="feature-description">Interactive charts that help you visualize wealth accumulation over time.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"/>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title">Real-time Results</h3>
+                            <p class="feature-description">Instant calculations as you adjust sliders—no page reloads required.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/>
+                                    <path d="M9 12l2 2 4-4"/>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title">No Login Required</h3>
+                            <p class="feature-description">Your privacy matters. Calculate freely without creating an account.</p>
+                        </div>
+                        <div class="feature-card">
+                            <div class="feature-icon">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/>
+                                </svg>
+                            </div>
+                            <h3 class="feature-title">Beginner-friendly Interface</h3>
+                            <p class="feature-description">Clean, jargon-free design built specifically for new investors.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Why Us Section -->
+            <section class="why-us" id="why-us">
+                <div class="container">
+                    <div class="why-us-grid">
+                        <div class="why-us-content">
+                            <h2 class="section-title">Why investors choose ReturnWise</h2>
+                            <p class="why-us-description">
+                                Investing can be complicated, but planning shouldn't be. We strip away the complexity of financial jargon and give you clear, actionable numbers.
+                            </p>
+                            <ul class="benefits-list">
+                                <li class="benefit-item">
+                                    <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                        <polyline points="22 4 12 14.01 9 11.01"/>
+                                    </svg>
+                                    <span>Simple & fast calculations</span>
+                                </li>
+                                <li class="benefit-item">
+                                    <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                        <polyline points="22 4 12 14.01 9 11.01"/>
+                                    </svg>
+                                    <span>Made for Indian investors (₹ Lakhs/Crores)</span>
+                                </li>
+                                <li class="benefit-item">
+                                    <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                        <polyline points="22 4 12 14.01 9 11.01"/>
+                                    </svg>
+                                    <span>Supports long-term wealth planning</span>
+                                </li>
+                                <li class="benefit-item">
+                                    <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                        <polyline points="22 4 12 14.01 9 11.01"/>
+                                    </svg>
+                                    <span>Helps avoid emotional investing</span>
+                                </li>
+                                <li class="benefit-item">
+                                    <svg class="benefit-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/>
+                                        <polyline points="22 4 12 14.01 9 11.01"/>
+                                    </svg>
+                                    <span>Totally free to use</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div class="why-us-visual">
+                            <div class="visual-card">
+                                <div class="visual-header">
+                                    <div class="visual-avatar"></div>
+                                    <div class="visual-lines">
+                                        <div class="visual-line"></div>
+                                        <div class="visual-line visual-line-short"></div>
+                                    </div>
+                                </div>
+                                <div class="visual-body">
+                                    <div class="visual-line"></div>
+                                    <div class="visual-line visual-line-medium"></div>
+                                    <div class="visual-line visual-line-short"></div>
+                                </div>
+                                <div class="visual-footer">
+                                    <div class="visual-line visual-line-medium"></div>
+                                    <div class="visual-line visual-line-short"></div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Use Cases Section -->
+            <section class="use-cases" id="use-cases">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">One tool, many possibilities</h2>
+                        <p class="section-description">
+                            Whether you are starting your first job or planning for retirement, ReturnWise adapts to your financial journey.
+                        </p>
+                    </div>
+                    <div class="use-cases-grid">
+                        <div class="use-case-card">
+                            <div class="use-case-icon use-case-icon-blue">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                                    <polyline points="17 6 23 6 23 12"/>
+                                </svg>
+                            </div>
+                            <h3 class="use-case-title">SIP Planning</h3>
+                            <p class="use-case-description">Plan your monthly investments to reach specific financial goals.</p>
+                        </div>
+                        <div class="use-case-card">
+                            <div class="use-case-icon use-case-icon-green">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M6 2L3 6v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6l-3-4z"/>
+                                    <line x1="3" y1="6" x2="21" y2="6"/>
+                                    <path d="M16 10a4 4 0 0 1-8 0"/>
+                                </svg>
+                            </div>
+                            <h3 class="use-case-title">Retirement Planning</h3>
+                            <p class="use-case-description">Calculate how much corpus you need for a stress-free retirement.</p>
+                        </div>
+                        <div class="use-case-card">
+                            <div class="use-case-icon use-case-icon-purple">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <circle cx="12" cy="8" r="7"/>
+                                    <polyline points="8.21 13.89 7 23 12 20 17 23 15.79 13.88"/>
+                                </svg>
+                            </div>
+                            <h3 class="use-case-title">Goal-based Investing</h3>
+                            <p class="use-case-description">Buying a car? A home? See how much you need to save today.</p>
+                        </div>
+                        <div class="use-case-card">
+                            <div class="use-case-icon use-case-icon-orange">
+                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <line x1="12" y1="1" x2="12" y2="23"/>
+                                    <path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"/>
+                                </svg>
+                            </div>
+                            <h3 class="use-case-title">Wealth Projection</h3>
+                            <p class="use-case-description">Visualize the power of compounding over 10, 20, or 30 years.</p>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Call to Action Section -->
+            <section class="cta" id="cta">
+                <div class="cta-bg"></div>
+                <div class="container">
+                    <div class="cta-content">
+                        <h2 class="cta-title">Start Planning Your Wealth Today</h2>
+                        <p class="cta-description">
+                            Join thousands of smart investors who use ReturnWise to make data-driven decisions.
+                        </p>
+                        <div class="cta-buttons">
+                            <a href="#calculators" class="btn btn-white btn-lg">Try ReturnWise Now</a>
+                            <a href="#features" class="btn btn-outline-white btn-lg">
+                                Learn More
+                                <svg class="btn-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                    <path d="M5 12h14M12 5l7 7-7 7"/>
+                                </svg>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Calculators Section -->
+            <section class="calculators-section" id="calculators">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Investment Calculators</h2>
+                        <p class="section-description">Choose a calculator to estimate your returns</p>
+                    </div>
+                    
+                    <!-- Calculator Tabs -->
+                    <div class="calculator-tabs">
+                        <button class="tab-btn active" data-tab="sip">SIP</button>
+                        <button class="tab-btn" data-tab="lumpsum">Lumpsum</button>
+                        <button class="tab-btn" data-tab="fd">FD</button>
+                        <button class="tab-btn" data-tab="rd">RD</button>
+                        <button class="tab-btn" data-tab="ppf">PPF</button>
+                    </div>
+
+                    <!-- SIP Calculator -->
+                    <div class="calculator-panel active" id="sip-panel">
+                        <div class="calculator-grid">
+                            <div class="calculator-controls">
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <h3 class="control-title">Configure Plan</h3>
+                                        <span class="auto-save-badge">Auto-Saved</span>
+                                    </div>
+                                    
+                                    <div class="input-group">
+                                        <div class="input-header">
+                                            <label class="input-label">Monthly Investment</label>
+                                            <div class="input-wrapper">
+                                                <span class="input-prefix">₹</span>
+                                                <input type="number" class="input-field" id="sipAmount" value="25000" min="500" max="100000">
+                                            </div>
+                                        </div>
+                                        <input type="range" class="slider" id="sipAmountSlider" min="500" max="100000" step="500" value="25000">
+                                        <div class="slider-labels">
+                                            <span>Min ₹500</span>
+                                            <span>Max ₹100000</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-header">
+                                            <label class="input-label">Expected Return Rate (P.A)</label>
+                                            <div class="input-wrapper">
+                                                <input type="number" class="input-field" id="sipRate" value="12" min="1" max="30" step="0.1">
+                                                <span class="input-suffix">%</span>
+                                            </div>
+                                        </div>
+                                        <input type="range" class="slider" id="sipRateSlider" min="1" max="30" step="0.1" value="12">
+                                        <div class="slider-labels">
+                                            <span>Min 1%</span>
+                                            <span>Max 30%</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-header">
+                                            <label class="input-label">Time Period</label>
+                                            <div class="input-wrapper">
+                                                <input type="number" class="input-field" id="sipYears" value="15" min="1" max="30">
+                                                <span class="input-suffix">Yr</span>
+                                            </div>
+                                        </div>
+                                        <input type="range" class="slider" id="sipYearsSlider" min="1" max="30" step="1" value="15">
+                                        <div class="slider-labels">
+                                            <span>Min 1 Yr</span>
+                                            <span>Max 30 Yr</span>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="step-up-card">
+                                    <div class="step-up-content">
+                                        <div class="step-up-icon">
+                                            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                                                <polyline points="17 6 23 6 23 12"/>
+                                            </svg>
+                                        </div>
+                                        <div class="step-up-text">
+                                            <p class="step-up-title">Step-up SIP</p>
+                                            <p class="step-up-desc">Coming soon</p>
+                                        </div>
+                                    </div>
+                                    <div class="toggle-disabled">
+                                        <div class="toggle-knob"></div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="calculator-results">
+                                <div class="results-card">
+                                    <div class="results-header">
+                                        <div>
+                                            <h3 class="results-title">Projected Wealth</h3>
+                                            <p class="results-amount" id="sipTotalValue">₹1,25,91,519</p>
+                                            <p class="results-growth">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                                                    <polyline points="17 6 23 6 23 12"/>
+                                                </svg>
+                                                <span id="sipGrowthPercent">236% Growth</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="results-body">
+                                        <div class="chart-container">
+                                            <canvas id="sipPieChart"></canvas>
+                                        </div>
+                                        <div class="breakdown">
+                                            <div class="breakdown-item">
+                                                <div class="breakdown-header">
+                                                    <span class="breakdown-dot breakdown-dot-invested"></span>
+                                                    <span class="breakdown-label">Invested</span>
+                                                </div>
+                                                <p class="breakdown-value" id="sipInvested">₹45,00,000</p>
+                                            </div>
+                                            <div class="breakdown-item">
+                                                <div class="breakdown-header">
+                                                    <span class="breakdown-dot breakdown-dot-returns"></span>
+                                                    <span class="breakdown-label">Est. Returns</span>
+                                                </div>
+                                                <p class="breakdown-value breakdown-value-returns" id="sipReturns">₹80,91,519</p>
+                                            </div>
+                                            <button class="btn btn-secondary btn-full">Start SIP Now</button>
+                                            <p class="disclaimer">Returns are subject to market risks. Read all scheme related documents carefully.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="growth-chart-card">
+                                    <h3 class="chart-title">Growth Analysis</h3>
+                                    <div class="chart-container-line">
+                                        <canvas id="sipGrowthChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Lumpsum Calculator -->
+                    <div class="calculator-panel" id="lumpsum-panel">
+                        <div class="calculator-grid">
+                            <div class="calculator-controls">
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <h3 class="control-title">Configure Plan</h3>
+                                        <span class="auto-save-badge">Auto-Saved</span>
+                                    </div>
+                                    
+                                    <div class="input-group">
+                                        <div class="input-header">
+                                            <label class="input-label">Total Investment</label>
+                                            <div class="input-wrapper">
+                                                <span class="input-prefix">₹</span>
+                                                <input type="number" class="input-field" id="lumpsumAmount" value="100000" min="1000" max="10000000">
+                                            </div>
+                                        </div>
+                                        <input type="range" class="slider" id="lumpsumAmountSlider" min="1000" max="10000000" step="1000" value="100000">
+                                        <div class="slider-labels">
+                                            <span>Min ₹1,000</span>
+                                            <span>Max ₹1Cr</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-header">
+                                            <label class="input-label">Expected Return Rate (P.A)</label>
+                                            <div class="input-wrapper">
+                                                <input type="number" class="input-field" id="lumpsumRate" value="12" min="1" max="30" step="0.1">
+                                                <span class="input-suffix">%</span>
+                                            </div>
+                                        </div>
+                                        <input type="range" class="slider" id="lumpsumRateSlider" min="1" max="30" step="0.1" value="12">
+                                        <div class="slider-labels">
+                                            <span>Min 1%</span>
+                                            <span>Max 30%</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-header">
+                                            <label class="input-label">Time Period</label>
+                                            <div class="input-wrapper">
+                                                <input type="number" class="input-field" id="lumpsumYears" value="10" min="1" max="30">
+                                                <span class="input-suffix">Yr</span>
+                                            </div>
+                                        </div>
+                                        <input type="range" class="slider" id="lumpsumYearsSlider" min="1" max="30" step="1" value="10">
+                                        <div class="slider-labels">
+                                            <span>Min 1 Yr</span>
+                                            <span>Max 30 Yr</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="calculator-results">
+                                <div class="results-card">
+                                    <div class="results-header">
+                                        <div>
+                                            <h3 class="results-title">Projected Wealth</h3>
+                                            <p class="results-amount" id="lumpsumTotalValue">₹3,10,585</p>
+                                            <p class="results-growth">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                                                    <polyline points="17 6 23 6 23 12"/>
+                                                </svg>
+                                                <span id="lumpsumGrowthPercent">211% Growth</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="results-body">
+                                        <div class="chart-container">
+                                            <canvas id="lumpsumPieChart"></canvas>
+                                        </div>
+                                        <div class="breakdown">
+                                            <div class="breakdown-item">
+                                                <div class="breakdown-header">
+                                                    <span class="breakdown-dot breakdown-dot-invested"></span>
+                                                    <span class="breakdown-label">Invested</span>
+                                                </div>
+                                                <p class="breakdown-value" id="lumpsumInvested">₹1,00,000</p>
+                                            </div>
+                                            <div class="breakdown-item">
+                                                <div class="breakdown-header">
+                                                    <span class="breakdown-dot breakdown-dot-returns"></span>
+                                                    <span class="breakdown-label">Est. Returns</span>
+                                                </div>
+                                                <p class="breakdown-value breakdown-value-returns" id="lumpsumReturns">₹2,10,585</p>
+                                            </div>
+                                            <button class="btn btn-secondary btn-full">Invest Now</button>
+                                            <p class="disclaimer">Returns are subject to market risks. Read all scheme related documents carefully.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="growth-chart-card">
+                                    <h3 class="chart-title">Growth Analysis</h3>
+                                    <div class="chart-container-line">
+                                        <canvas id="lumpsumGrowthChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- FD Calculator -->
+                    <div class="calculator-panel" id="fd-panel">
+                        <div class="calculator-grid">
+                            <div class="calculator-controls">
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <h3 class="control-title">Configure Plan</h3>
+                                        <span class="auto-save-badge">Auto-Saved</span>
+                                    </div>
+                                    
+                                    <div class="input-group">
+                                        <div class="input-header">
+                                            <label class="input-label">Total Investment</label>
+                                            <div class="input-wrapper">
+                                                <span class="input-prefix">₹</span>
+                                                <input type="number" class="input-field" id="fdAmount" value="100000" min="1000" max="10000000">
+                                            </div>
+                                        </div>
+                                        <input type="range" class="slider" id="fdAmountSlider" min="1000" max="10000000" step="1000" value="100000">
+                                        <div class="slider-labels">
+                                            <span>Min ₹1,000</span>
+                                            <span>Max ₹1Cr</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-header">
+                                            <label class="input-label">Rate of Interest (P.A)</label>
+                                            <div class="input-wrapper">
+                                                <input type="number" class="input-field" id="fdRate" value="7" min="1" max="15" step="0.1">
+                                                <span class="input-suffix">%</span>
+                                            </div>
+                                        </div>
+                                        <input type="range" class="slider" id="fdRateSlider" min="1" max="15" step="0.1" value="7">
+                                        <div class="slider-labels">
+                                            <span>Min 1%</span>
+                                            <span>Max 15%</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-header">
+                                            <label class="input-label">Time Period</label>
+                                            <div class="input-wrapper">
+                                                <input type="number" class="input-field" id="fdYears" value="5" min="1" max="10">
+                                                <span class="input-suffix">Yr</span>
+                                            </div>
+                                        </div>
+                                        <input type="range" class="slider" id="fdYearsSlider" min="1" max="10" step="1" value="5">
+                                        <div class="slider-labels">
+                                            <span>Min 1 Yr</span>
+                                            <span>Max 10 Yr</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="calculator-results">
+                                <div class="results-card">
+                                    <div class="results-header">
+                                        <div>
+                                            <h3 class="results-title">Maturity Amount</h3>
+                                            <p class="results-amount" id="fdTotalValue">₹1,40,255</p>
+                                            <p class="results-growth">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                                                    <polyline points="17 6 23 6 23 12"/>
+                                                </svg>
+                                                <span id="fdGrowthPercent">40% Growth</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="results-body">
+                                        <div class="chart-container">
+                                            <canvas id="fdPieChart"></canvas>
+                                        </div>
+                                        <div class="breakdown">
+                                            <div class="breakdown-item">
+                                                <div class="breakdown-header">
+                                                    <span class="breakdown-dot breakdown-dot-invested"></span>
+                                                    <span class="breakdown-label">Invested</span>
+                                                </div>
+                                                <p class="breakdown-value" id="fdInvested">₹1,00,000</p>
+                                            </div>
+                                            <div class="breakdown-item">
+                                                <div class="breakdown-header">
+                                                    <span class="breakdown-dot breakdown-dot-returns"></span>
+                                                    <span class="breakdown-label">Interest Earned</span>
+                                                </div>
+                                                <p class="breakdown-value breakdown-value-returns" id="fdReturns">₹40,255</p>
+                                            </div>
+                                            <button class="btn btn-secondary btn-full">Open FD</button>
+                                            <p class="disclaimer">Interest rates may vary based on bank and tenure.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="growth-chart-card">
+                                    <h3 class="chart-title">Growth Analysis</h3>
+                                    <div class="chart-container-line">
+                                        <canvas id="fdGrowthChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- RD Calculator -->
+                    <div class="calculator-panel" id="rd-panel">
+                        <div class="calculator-grid">
+                            <div class="calculator-controls">
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <h3 class="control-title">Configure Plan</h3>
+                                        <span class="auto-save-badge">Auto-Saved</span>
+                                    </div>
+                                    
+                                    <div class="input-group">
+                                        <div class="input-header">
+                                            <label class="input-label">Monthly Deposit</label>
+                                            <div class="input-wrapper">
+                                                <span class="input-prefix">₹</span>
+                                                <input type="number" class="input-field" id="rdAmount" value="5000" min="500" max="100000">
+                                            </div>
+                                        </div>
+                                        <input type="range" class="slider" id="rdAmountSlider" min="500" max="100000" step="500" value="5000">
+                                        <div class="slider-labels">
+                                            <span>Min ₹500</span>
+                                            <span>Max ₹100000</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-header">
+                                            <label class="input-label">Rate of Interest (P.A)</label>
+                                            <div class="input-wrapper">
+                                                <input type="number" class="input-field" id="rdRate" value="6.5" min="1" max="12" step="0.1">
+                                                <span class="input-suffix">%</span>
+                                            </div>
+                                        </div>
+                                        <input type="range" class="slider" id="rdRateSlider" min="1" max="12" step="0.1" value="6.5">
+                                        <div class="slider-labels">
+                                            <span>Min 1%</span>
+                                            <span>Max 12%</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-header">
+                                            <label class="input-label">Time Period</label>
+                                            <div class="input-wrapper">
+                                                <input type="number" class="input-field" id="rdYears" value="5" min="1" max="10">
+                                                <span class="input-suffix">Yr</span>
+                                            </div>
+                                        </div>
+                                        <input type="range" class="slider" id="rdYearsSlider" min="1" max="10" step="1" value="5">
+                                        <div class="slider-labels">
+                                            <span>Min 1 Yr</span>
+                                            <span>Max 10 Yr</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="calculator-results">
+                                <div class="results-card">
+                                    <div class="results-header">
+                                        <div>
+                                            <h3 class="results-title">Maturity Amount</h3>
+                                            <p class="results-amount" id="rdTotalValue">₹3,56,082</p>
+                                            <p class="results-growth">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                                                    <polyline points="17 6 23 6 23 12"/>
+                                                </svg>
+                                                <span id="rdGrowthPercent">19% Growth</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="results-body">
+                                        <div class="chart-container">
+                                            <canvas id="rdPieChart"></canvas>
+                                        </div>
+                                        <div class="breakdown">
+                                            <div class="breakdown-item">
+                                                <div class="breakdown-header">
+                                                    <span class="breakdown-dot breakdown-dot-invested"></span>
+                                                    <span class="breakdown-label">Total Deposit</span>
+                                                </div>
+                                                <p class="breakdown-value" id="rdInvested">₹3,00,000</p>
+                                            </div>
+                                            <div class="breakdown-item">
+                                                <div class="breakdown-header">
+                                                    <span class="breakdown-dot breakdown-dot-returns"></span>
+                                                    <span class="breakdown-label">Interest Earned</span>
+                                                </div>
+                                                <p class="breakdown-value breakdown-value-returns" id="rdReturns">₹56,082</p>
+                                            </div>
+                                            <button class="btn btn-secondary btn-full">Open RD</button>
+                                            <p class="disclaimer">Interest rates may vary based on bank and tenure.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="growth-chart-card">
+                                    <h3 class="chart-title">Growth Analysis</h3>
+                                    <div class="chart-container-line">
+                                        <canvas id="rdGrowthChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- PPF Calculator -->
+                    <div class="calculator-panel" id="ppf-panel">
+                        <div class="calculator-grid">
+                            <div class="calculator-controls">
+                                <div class="control-card">
+                                    <div class="control-header">
+                                        <h3 class="control-title">Configure Plan</h3>
+                                        <span class="auto-save-badge">Auto-Saved</span>
+                                    </div>
+                                    
+                                    <div class="input-group">
+                                        <div class="input-header">
+                                            <label class="input-label">Yearly Investment</label>
+                                            <div class="input-wrapper">
+                                                <span class="input-prefix">₹</span>
+                                                <input type="number" class="input-field" id="ppfAmount" value="150000" min="500" max="150000">
+                                            </div>
+                                        </div>
+                                        <input type="range" class="slider" id="ppfAmountSlider" min="500" max="150000" step="500" value="150000">
+                                        <div class="slider-labels">
+                                            <span>Min ₹500</span>
+                                            <span>Max ₹1.5L</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-header">
+                                            <label class="input-label">Interest Rate (P.A)</label>
+                                            <div class="input-wrapper">
+                                                <input type="number" class="input-field" id="ppfRate" value="7.1" min="1" max="12" step="0.1">
+                                                <span class="input-suffix">%</span>
+                                            </div>
+                                        </div>
+                                        <input type="range" class="slider" id="ppfRateSlider" min="1" max="12" step="0.1" value="7.1">
+                                        <div class="slider-labels">
+                                            <span>Min 1%</span>
+                                            <span>Max 12%</span>
+                                        </div>
+                                    </div>
+
+                                    <div class="input-group">
+                                        <div class="input-header">
+                                            <label class="input-label">Time Period</label>
+                                            <div class="input-wrapper">
+                                                <input type="number" class="input-field" id="ppfYears" value="15" min="15" max="50">
+                                                <span class="input-suffix">Yr</span>
+                                            </div>
+                                        </div>
+                                        <input type="range" class="slider" id="ppfYearsSlider" min="15" max="50" step="1" value="15">
+                                        <div class="slider-labels">
+                                            <span>Min 15 Yr</span>
+                                            <span>Max 50 Yr</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="calculator-results">
+                                <div class="results-card">
+                                    <div class="results-header">
+                                        <div>
+                                            <h3 class="results-title">Maturity Amount</h3>
+                                            <p class="results-amount" id="ppfTotalValue">₹40,68,431</p>
+                                            <p class="results-growth">
+                                                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                                    <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                                                    <polyline points="17 6 23 6 23 12"/>
+                                                </svg>
+                                                <span id="ppfGrowthPercent">81% Growth</span>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    <div class="results-body">
+                                        <div class="chart-container">
+                                            <canvas id="ppfPieChart"></canvas>
+                                        </div>
+                                        <div class="breakdown">
+                                            <div class="breakdown-item">
+                                                <div class="breakdown-header">
+                                                    <span class="breakdown-dot breakdown-dot-invested"></span>
+                                                    <span class="breakdown-label">Total Investment</span>
+                                                </div>
+                                                <p class="breakdown-value" id="ppfInvested">₹22,50,000</p>
+                                            </div>
+                                            <div class="breakdown-item">
+                                                <div class="breakdown-header">
+                                                    <span class="breakdown-dot breakdown-dot-returns"></span>
+                                                    <span class="breakdown-label">Interest Earned</span>
+                                                </div>
+                                                <p class="breakdown-value breakdown-value-returns" id="ppfReturns">₹18,18,431</p>
+                                            </div>
+                                            <button class="btn btn-secondary btn-full">Open PPF</button>
+                                            <p class="disclaimer">PPF interest rates are set by the government and subject to change.</p>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="growth-chart-card">
+                                    <h3 class="chart-title">Growth Analysis</h3>
+                                    <div class="chart-container-line">
+                                        <canvas id="ppfGrowthChart"></canvas>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Compare Section -->
+            <section class="compare-section" id="compare">
+                <div class="container">
+                    <div class="section-header">
+                        <h2 class="section-title">Compare Investments</h2>
+                        <p class="section-description">Compare different investment options side-by-side</p>
+                    </div>
+
+                    <div class="compare-card">
+                        <div class="compare-header">
+                            <h3 class="compare-title">Investment Parameters</h3>
+                        </div>
+                        <div class="compare-controls">
+                            <div class="compare-input-group">
+                                <div class="input-header">
+                                    <label class="input-label">Monthly Investment</label>
+                                    <div class="input-wrapper">
+                                        <span class="input-prefix">₹</span>
+                                        <input type="number" class="input-field" id="compareAmount" value="25000" min="500" max="100000">
+                                    </div>
+                                </div>
+                                <input type="range" class="slider" id="compareAmountSlider" min="500" max="100000" step="500" value="25000">
+                                <div class="slider-labels">
+                                    <span>Min ₹500</span>
+                                    <span>Max ₹100000</span>
+                                </div>
+                            </div>
+
+                            <div class="compare-input-group">
+                                <div class="input-header">
+                                    <label class="input-label">Time Period</label>
+                                    <div class="input-wrapper">
+                                        <input type="number" class="input-field" id="compareYears" value="15" min="1" max="30">
+                                        <span class="input-suffix">Yr</span>
+                                    </div>
+                                </div>
+                                <input type="range" class="slider" id="compareYearsSlider" min="1" max="30" step="1" value="15">
+                                <div class="slider-labels">
+                                    <span>Min 1 Yr</span>
+                                    <span>Max 30 Yr</span>
+                                </div>
+                            </div>
+
+                            <div class="compare-options">
+                                <p class="compare-options-label">Select investments to compare:</p>
+                                <div class="compare-toggles">
+                                    <button class="compare-toggle active" data-compare="sip">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/>
+                                            <polyline points="17 6 23 6 23 12"/>
+                                        </svg>
+                                        SIP
+                                    </button>
+                                    <button class="compare-toggle active" data-compare="fd">
+                                        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                            <rect x="2" y="5" width="20" height="14" rx="2"/>
+                                            <line x1="2" y1="10" x2="22" y2="10"/>
+                                        </svg>
+                                        FD
+                                    </button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="compare-results" id="compareResults">
+                        <!-- Dynamic comparison cards will be inserted here -->
+                    </div>
+
+                    <div class="compare-summary-card">
+                        <h3 class="compare-summary-title">Comparison Summary</h3>
+                        <div class="table-container">
+                            <table class="compare-table" id="compareTable">
+                                <thead>
+                                    <tr>
+                                        <th>Investment Type</th>
+                                        <th class="text-right">Invested Amount</th>
+                                        <th class="text-right">Total Returns</th>
+                                        <th class="text-right">Final Value</th>
+                                        <th class="text-right">Growth %</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="compareTableBody">
+                                    <!-- Dynamic table rows will be inserted here -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </section>
+        </main>
+
+        <!-- Footer -->
+        <footer class="footer">
+            <div class="container">
+                <div class="footer-grid">
+                    <div class="footer-brand">
+                        <h3 class="footer-logo">ReturnWise</h3>
+                        <p class="footer-description">
+                            Empowering Indian investors with accurate, transparent, and easy-to-use financial tools.
+                        </p>
+                    </div>
+                    <div class="footer-links">
+                        <h4 class="footer-title">Calculators</h4>
+                        <ul class="footer-list">
+                            <li><a href="#sip" class="footer-link">SIP Calculator</a></li>
+                            <li><a href="#lumpsum" class="footer-link">Lumpsum Calculator</a></li>
+                            <li><a href="#fd" class="footer-link">FD Calculator</a></li>
+                            <li><a href="#ppf" class="footer-link">PPF Calculator</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-links">
+                        <h4 class="footer-title">Company</h4>
+                        <ul class="footer-list">
+                            <li><a href="#" class="footer-link">About Us</a></li>
+                            <li><a href="#" class="footer-link">Contact</a></li>
+                            <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                        </ul>
+                    </div>
+                    <div class="footer-disclaimer">
+                        <h4 class="footer-title">Disclaimer</h4>
+                        <p class="footer-text">
+                            Investments are subject to market risks. The calculations provided by ReturnWise are for educational purposes only and do not constitute financial advice. Market returns are not guaranteed.
+                        </p>
+                    </div>
+                </div>
+                <div class="footer-bottom">
+                    <p class="footer-copyright">© 2025 ReturnWise. All rights reserved.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <!-- Chart.js for charts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="js/main.js"></script>
+</body>
+</html>
